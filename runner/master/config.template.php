@@ -58,6 +58,16 @@ $CFG->behat_profiles = [
 
 if ('firefox' === getenv('BROWSER')) {
     $CFG->behat_profiles['default']['capabilities'] = [
+        'chrome' => [
+            'switches' => [
+                '--no-sandbox',
+                '--headless',
+                '--disable-gpu',
+            ],
+        ],
+    ];
+} else if ('firefox' === getenv('BROWSER')) {
+    $CFG->behat_profiles['default']['capabilities'] = [
             'extra_capabilities' => [
                 'marionette' => false,
             ],
