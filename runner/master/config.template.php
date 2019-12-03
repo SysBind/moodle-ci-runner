@@ -69,7 +69,9 @@ if ('chrome' === getenv('BROWSER')) {
 } else if ('firefox' === getenv('BROWSER')) {
     $CFG->behat_profiles['default']['capabilities'] = [
         'moz:firefoxOptions' => [
-            'headless' => true,
+            'args' => [
+                '-headless',
+            ],
             'prefs' => [
                 'devtools.console.stdout.content' => true,
             ],
