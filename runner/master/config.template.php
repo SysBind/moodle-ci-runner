@@ -68,10 +68,16 @@ if ('chrome' === getenv('BROWSER')) {
     ];
 } else if ('firefox' === getenv('BROWSER')) {
     $CFG->behat_profiles['default']['capabilities'] = [
-            'extra_capabilities' => [
-                'marionette' => false,
+        'moz:firefoxOptions' => [
+            'headless' => true,
+            'prefs' => [
+                'devtools.console.stdout.content' => true,
             ],
-        ];
+            'log' => [
+                'level' => 'trace',
+            ],
+        ],
+    ];
 }
 
 if (getenv('BEHAT_TOTAL_RUNS') <= 1) {
