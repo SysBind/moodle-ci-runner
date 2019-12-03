@@ -484,7 +484,15 @@ then
         --detach \
         $SHMMAP \
         -v "${CODEDIR}":/var/www/html \
-        selenium/standalone-chrome:${SELVERSION}
+        -e START_XVFB=false \
+        selenium/standalone-chrome:${SELVERSION} \
+        /usr/bin/chromedriver \
+            --port=4444 \
+            --url-base=wd/hub \
+            --whitelisted-ips \
+            --readable-timestamp \
+            --verbose \
+            --replayable
 
       export "SELENIUMURL_${ITER}"="http://${SELITERNAME}:4444"
       echo "SELENIUMURL_${ITER}" >> "${ENVIROPATH}"

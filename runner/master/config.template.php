@@ -56,7 +56,7 @@ $CFG->behat_profiles = [
     ],
 ];
 
-if ('firefox' === getenv('BROWSER')) {
+if ('chrome' === getenv('BROWSER')) {
     $CFG->behat_profiles['default']['capabilities'] = [
         'chrome' => [
             'switches' => [
