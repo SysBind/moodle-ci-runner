@@ -512,12 +512,9 @@ then
         $SHMMAP \
         -v "${CODEDIR}":/var/www/html \
         -e START_XVFB=false \
-        selenium/standalone-firefox:${SELVERSION} \
-        /usr/bin/geckodriver \
-            --host 0.0.0.0 \
-            --log trace
+        selenium/standalone-firefox:${SELVERSION}
 
-      export "SELENIUMURL_${ITER}"="http://${SELITERNAME}:4444"
+      export "SELENIUMURL_${ITER}"="http://${SELITERNAME}:4444/wd/hub"
       echo "SELENIUMURL_${ITER}" >> "${ENVIROPATH}"
 
       ITER=$(($ITER+1))
