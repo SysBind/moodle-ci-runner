@@ -52,7 +52,6 @@ $CFG->behat_dataroot  = '/var/www/behatdata/run';
 $CFG->behat_prefix = 'b_';
 $CFG->behat_profiles = [
     'default' => [
-        'wd_host' => getenv('SELENIUMURL_0'),
         'browser' => getenv('BROWSER'),
         'capabilities' => [
             'browserName' => getenv('BROWSER'),
