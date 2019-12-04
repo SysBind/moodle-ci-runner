@@ -101,8 +101,8 @@ for ($run = 0; $run < getenv('BEHAT_TOTAL_RUNS'); $run++) {
     ];
 
     // Copy the profile for re-runs.
-    // No need to use the separate wd_host because these do not run in parallel.
     $CFG->behat_profiles["default{$run}"] = $CFG->behat_profiles['default'];
+    $CFG->behat_profiles["default{$run}"]['wd_host'] = getenv("SELENIUMURL_{$run}");
 }
 
 define('PHPUNIT_LONGTEST', true);
