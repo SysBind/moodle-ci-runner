@@ -488,7 +488,6 @@ then
         selenium/standalone-chrome:${SELVERSION} \
         /usr/bin/chromedriver \
             --port=4444 \
-            --url-base=wd/hub \
             --whitelisted-ips \
             --readable-timestamp \
             --verbose \
@@ -512,7 +511,11 @@ then
         --detach \
         $SHMMAP \
         -v "${CODEDIR}":/var/www/html \
-        selenium/standalone-firefox:${SELVERSION}
+        -e START_XVFB=false \
+        selenium/standalone-firefox:${SELVERSION} \
+        /usr/bin/geckodriver \
+            --host 0.0.0.0 \
+            --log trace
 
       export "SELENIUMURL_${ITER}"="http://${SELITERNAME}:4444"
       echo "SELENIUMURL_${ITER}" >> "${ENVIROPATH}"

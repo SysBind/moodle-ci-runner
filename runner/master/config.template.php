@@ -52,21 +52,24 @@ $CFG->behat_dataroot  = '/var/www/behatdata/run';
 $CFG->behat_prefix = 'b_';
 $CFG->behat_profiles = [
     'default' => [
+        'wd_host' => getenv('SELENIUMURL_0'),
         'browser' => getenv('BROWSER'),
     ],
 ];
 
 if ('chrome' === getenv('BROWSER')) {
     $CFG->behat_profiles['default']['capabilities'] = [
-        'chrome' => [
-            'switches' => [
-                '--no-sandbox',
-                '--headless',
-                '--disable-gpu',
+        'chromeOptions' => [
+            'args' => [
+                'no-sandbox',
+                'headless',
+                'disable-gpu',
             ],
         ],
     ];
-} else if ('firefox' === getenv('BROWSER')) {
+}
+
+if ('firefox' === getenv('BROWSER')) {
     $CFG->behat_profiles['default']['capabilities'] = [
         'moz:firefoxOptions' => [
             'args' => [
@@ -83,7 +86,7 @@ if ('chrome' === getenv('BROWSER')) {
 }
 
 if (getenv('BEHAT_TOTAL_RUNS') <= 1) {
-    $CFG->behat_profiles['default']['wd_host'] = getenv('SELENIUMURL_0') . '/wd/hub';
+    $CFG->behat_profiles['default']['wd_host'] = getenv('SELENIUMURL_0');
 }
 
 $CFG->behat_faildump_path = '/shared';
@@ -95,13 +98,12 @@ if (getenv('BEHAT_TIMING_FILENAME')) {
 $CFG->behat_parallel_run = [];
 for ($run = 0; $run < getenv('BEHAT_TOTAL_RUNS'); $run++) {
     $CFG->behat_parallel_run[$run] = [
-        'wd_host' => getenv("SELENIUMURL_{$run}") . '/wd/hub',
+        'wd_host' => getenv("SELENIUMURL_{$run}"),
     ];
 
     // Copy the profile for re-runs.
-    $profile = $CFG->behat_profiles['default'];
-    $profile['wd_host'] = getenv("SELENIUMURL_{$run}") . '/wd/hub';
-    $CFG->behat_profiles["default{$run}"] = $profile;
+    // No need to use the separate wd_host because these do not run in parallel.
+    $CFG->behat_profiles["default{$run}"] = $CFG->behat_profiles['default'];
 }
 
 define('PHPUNIT_LONGTEST', true);
