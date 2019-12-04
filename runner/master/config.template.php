@@ -54,33 +54,32 @@ $CFG->behat_profiles = [
     'default' => [
         'wd_host' => getenv('SELENIUMURL_0'),
         'browser' => getenv('BROWSER'),
+        'capabilities' => [
+            'browserName' => getenv('BROWSER'),
+        ],
     ],
 ];
 
 if ('chrome' === getenv('BROWSER')) {
-    $CFG->behat_profiles['default']['capabilities'] = [
-        'chromeOptions' => [
-            'args' => [
-                'no-sandbox',
-                'headless',
-                'disable-gpu',
-            ],
+    $CFG->behat_profiles['default']['capabilities']['chromeOptions'] = [
+        'args' => [
+            'no-sandbox',
+            'headless',
+            'disable-gpu',
         ],
     ];
 }
 
 if ('firefox' === getenv('BROWSER')) {
-    $CFG->behat_profiles['default']['capabilities'] = [
-        'moz:firefoxOptions' => [
-            'args' => [
-                '-headless',
-            ],
-            'prefs' => [
-                'devtools.console.stdout.content' => true,
-            ],
-            'log' => [
-                'level' => 'trace',
-            ],
+    $CFG->behat_profiles['default']['capabilities']['moz:firefoxOptions'] = [
+        'args' => [
+            '-headless',
+        ],
+        'prefs' => [
+            'devtools.console.stdout.content' => true,
+        ],
+        'log' => [
+            'level' => 'trace',
         ],
     ];
 }
