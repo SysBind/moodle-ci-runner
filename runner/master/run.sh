@@ -819,6 +819,7 @@ else
 
   CMD="php vendor/bin/phpunit"
   CMD="${CMD} --disallow-test-output"
+  CMD="${CMD} --testdox"
   if [ "$MOODLE_VERSION" -gt "31" ]
   then
     # Only for phpunit 5 and above (aka post 31_STABLE)
